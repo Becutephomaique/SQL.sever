@@ -19,8 +19,8 @@ FROM            dbo.NHANVIEN INNER JOIN
 GROUP BY dbo.PHONGBAN.MAPHG, dbo.PHONGBAN.TENPHG
 
 --Xuất định dạng "Lương trung bình"kiểu varchar , dùng dấu phẩy tách cứ mỗi 3 chữ số trong chuỗi ra , gợi ý dùng Left , Replace.
-SELECT        dbo.PHONGBAN.MAPHG, dbo.PHONGBAN.TENPHG, LEFT(CAST(AVG(dbo.NHANVIEN.LUONG) AS varchar), 3) + [,] + REPLACE(CAST(AVG(dbo.NHANVIEN.LUONG) AS varchar), LEFT(CAST(AVG(dbo.NHANVIEN.LUONG) AS varchar), 
-                         3), [,]) AS 'Lương trung bình'
+SELECT        dbo.PHONGBAN.MAPHG, dbo.PHONGBAN.TENPHG, LEFT(CAST(AVG(dbo.NHANVIEN.LUONG) AS varchar), 3) + ',' + REPLACE(CAST(AVG(dbo.NHANVIEN.LUONG) AS varchar), LEFT(CAST(AVG(dbo.NHANVIEN.LUONG) AS varchar), 
+                         3), ',') AS 'Lương trung bình'
 FROM            dbo.NHANVIEN INNER JOIN
                          dbo.PHONGBAN ON dbo.NHANVIEN.PHG = dbo.PHONGBAN.MAPHG
 GROUP BY dbo.PHONGBAN.MAPHG, dbo.PHONGBAN.TENPHG
@@ -58,7 +58,7 @@ WHERE        (LUONG >
  --Dữ liệu chột TENNV có ký tự thứ 2 được viết in hoa, các ký tự còn lại viết thường( ví dụ: kHanh)
  --Dữ liệu cột DCHI chỉ hiển thị phần tên đường, không hiển thị các thông tin khác như số nhà hay thành phố.
 SELECT        UPPER(dbo.NHANVIEN.HONV) AS HONV, LOWER(dbo.NHANVIEN.TENLOT) AS TENLOT, LOWER(SUBSTRING(dbo.NHANVIEN.TENNV, 1, 1)) + UPPER(SUBSTRING(dbo.NHANVIEN.TENNV, 2, 1)) 
-                         + SUBSTRING(dbo.NHANVIEN.TENNV, 3, 10) AS TENNV , dbo.NHANVIEN.DIACHI
+                         + SUBSTRING(dbo.NHANVIEN.TENNV, 3, 10) AS TENNV , dbo.NHANVIEN.DCHI
 FROM            dbo.NHANVIEN INNER JOIN
                          dbo.THANNHAN ON dbo.NHANVIEN.MANV = dbo.THANNHAN.MA_NVIEN
 GROUP BY dbo.NHANVIEN.HONV, dbo.NHANVIEN.TENLOT, dbo.NHANVIEN.TENNV
